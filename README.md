@@ -1,13 +1,14 @@
 # Package repo for XercesJ 2.12.2 with XSD 1.1 support
 
 This repository is intended to be a repo that facilitates the use of
-Apache XercesJ v2.12.2, with XSD 1.1 support. 
+Apache XercesJ v2.12.2, with XSD 1.1 support.
 
 Today, Monday, 30 June 2025, there is no artifact on https://mvnrepository.com/
 that packages the XercesJ JAR, along with a declaration of all of its
-dependencies. Instead, the [downloads page](Xerces-J-bin.2.12.2-xml-schema-1.1.tar.gz) for Xerces
-packages a tgz or zip archive of the required xercesImpl.jar (different from vanilla xercesImpl.jar 2.12.2), 
-as well as a set of related dependencies. 
+dependencies. Instead, the [downloads
+page](Xerces-J-bin.2.12.2-xml-schema-1.1.tar.gz) for Xerces packages a tgz or
+zip archive of the required xercesImpl.jar (different from vanilla
+xercesImpl.jar 2.12.2), as well as a set of related dependencies.
 
 As a result it is impossible to have a simple maven project that declares a
 dependency on XercesJ v2.12.2 _with XSD1.1 support_.  Good evidence for this
@@ -15,12 +16,11 @@ challenge is on
 [Stackoverflow](https://www.google.com/search?q=xsd+1.1+xerces+site%3Astackoverflow.com)
 with the list of unanswered questions on this topic.
 
-This repo is basically a repackaging of the downloadable Apache archive, into a format that 
-Maven can use directly. You can construct a simple maven project file to get the 
-dependencies you need. 
+This repo is basically a repackaging of the downloadable Apache archive, into a
+format that Maven can use directly. You can construct a simple maven project
+file to get the dependencies you need.
 
 ## Using it
-
 
 You can include this into your maven project in this way:
 
@@ -95,3 +95,38 @@ You can include this into your maven project in this way:
 ```
 
 Then just `mvn clean package` as usual.
+
+## Java code
+
+The java code you use should be something like this:
+
+```java
+  private Schema getSchema(SchemaFactory schemaFactory, String schemaPath) throws SAXException {
+    Path xsdPath = Paths.get(xsdSourceDir, schemaPath);
+    File xsdFile = xsdPath.toFile();
+    if (!xsdFile.exists() || !xsdFile.isFile()) {
+      return null;
+    }
+    Schema schema = schemaFactory.newSchema(xsdFile);
+    return schema;
+  }
+
+  ...
+
+    var schemaFactory = SchemaFactory.newInstance("http://www.w3.org/XML/XMLSchema/v1.1");
+    schemaFactory.setFeature(
+        "http://apache.org/xml/features/validation/cta-full-xpath-checking", true);
+    if (wantInsecure) {
+      schemaFactory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, false);
+    }
+
+    ErrorHandler handler = new MyErrorHandler();
+    Schema schema = getSchema(schemaFactory, "myschema.xsd");
+    Validator validator = schema.newValidator();
+    validator.setErrorHandler(handler);
+
+    try (InputStream inputStream = new FileInputStream(xmlfile)) {
+      validator.validate(new StreamSource(inputStream));
+    }
+    ...
+```
