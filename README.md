@@ -40,23 +40,11 @@ You can include this into your maven project in this way:
     </repository>
   </repositories>
 
-  <dependencyManagement>
-    <dependencies>
-      <dependency>
-        <!-- this is the repo -->
-        <groupId>com.github.DinoChiesa</groupId>
-        <artifactId>xercesj-xsd11-package</artifactId>
-        <version>20250630</version>
-        <scope>import</scope>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
-
   <dependencies>
     <dependency>
       <groupId>com.github.DinoChiesa.xercesj-xsd11-package</groupId>
       <artifactId>xercesImpl-xsd11</artifactId>
-      <version>20250630</version>
+      <version>20250630</version> <!-- release tag for this repo -->
       <!--
           <version>2.12.2</version>
       -->
