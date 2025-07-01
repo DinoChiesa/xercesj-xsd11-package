@@ -21,23 +21,8 @@
   </properties>
 
   <build>
+    <finalName>${project.artifactId}-${project.version}</finalName>
     <plugins>
-      <!-- Disable the jar plugin. -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jar-plugin</artifactId>
-        <version>3.4.2</version>
-        <executions>
-          <execution>
-            <id>default-jar</id>
-            <phase>none</phase>
-          </execution>
-          <execution>
-            <id>default-testJar</id>
-            <phase>none</phase>
-          </execution>
-        </executions>
-      </plugin>
 
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -58,9 +43,31 @@
                   <mapper type="flatten"/>
                 </copy>
                 <move file="${project.build.directory}/xml-apis.jar"
-                      tofile="${project.build.directory}/xml-apis-1.4.02.jar" />
+                      tofile="${project.build.directory}/${project.build.finalName}.jar" />
               </target>
             </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>build-helper-maven-plugin</artifactId>
+        <version>3.5.0</version>
+        <executions>
+          <execution>
+            <id>attach-artifacts</id>
+            <phase>package</phase> <goals>
+            <goal>attach-artifact</goal>
+          </goals>
+          <configuration>
+            <artifacts>
+              <artifact>
+                <file>${project.build.directory}/${project.build.finalName}.jar</file>
+                <type>jar</type>
+                <classifier>downloaded</classifier>
+              </artifact>
+            </artifacts>
+          </configuration>
           </execution>
         </executions>
       </plugin>

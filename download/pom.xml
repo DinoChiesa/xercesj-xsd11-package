@@ -26,8 +26,16 @@
             <id>default-jar</id>
             <phase>none</phase>
           </execution>
+        </executions>
+      </plugin>
+
+      <!-- Disable the install plugin. -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-install-plugin</artifactId>
+        <executions>
           <execution>
-            <id>default-testJar</id>
+            <id>default-install</id>
             <phase>none</phase>
           </execution>
         </executions>

@@ -15,8 +15,8 @@
 
     <modules>
         <module>download</module>
-        <module>xercesImpl</module>
         <module>cup-runtime</module>
+        <module>xercesImpl-xsd11</module>
         <module>xpath2-processor</module>
         <module>xml-apis</module>
     </modules>
