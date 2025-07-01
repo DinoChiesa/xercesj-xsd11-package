@@ -1,0 +1,23 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                             http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.github.DinoChiesa</groupId>
+    <artifactId>xercesj-xsd11-package</artifactId>
+    <packaging>pom</packaging>
+    <version>20250630</version>
+    <name>XercesJ 2.12.2 XSD v1.1 packaging project</name>
+    <properties>
+      <jar.download.dir>${maven.multiModuleProjectDirectory}/download/target/lib</jar.download.dir>
+    </properties>
+
+    <modules>
+        <module>download</module>
+        <module>xercesImpl</module>
+        <module>cup-runtime</module>
+        <module>xpath2-processor</module>
+        <module>xml-apis</module>
+    </modules>
+</project>
